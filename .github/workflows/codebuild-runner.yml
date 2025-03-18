@@ -1,0 +1,50 @@
+name: Test CodeBuild Runner Integration
+
+# Trigger on push to main branch
+on: [push]
+
+jobs:
+  test-runner:
+    # Replace PROJECT_NAME with your CodeBuild project name
+    runs-on: GithubOrg-${{ github.run_id }}-${{ github.run_attempt }}
+    timeout-minutes: 30  # Add timeout to prevent hanging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print Runner Info
+        run: |
+          echo "Runner Name: $RUNNER_NAME"
+          echo "Runner Group: $RUNNER_GROUP"
+          echo "Runner OS: $RUNNER_OS"
+          echo "GitHub Workspace: $GITHUB_WORKSPACE"
+
+      # Test runner group assignment
+      - name: Check Runner Group
+        run: |
+          if [ -n "$RUNNER_GROUP" ]; then
+            echo "Runner is part of group: $RUNNER_GROUP"
+          else
+            echo "Runner is not assigned to any group"
+          fi
+
+      # Simple build test
+      - name: Run Build Test
+        run: |
+          echo "Building project..."
+          # Add your build commands here
+          echo "Build complete"
+
+  # Optional: Add a second job to test concurrent builds
+  second-job:
+    needs: test-runner
+    runs-on: codebuild-PROJECT_NAME-${{ github.run_id }}-${{ github.run_attempt }}
+    
+    steps:
+      - name: Test Second Job
+        run: |
+          echo "Running second job..."
+          sleep 30  # Simulate work
+          echo "Second job complete"
+
