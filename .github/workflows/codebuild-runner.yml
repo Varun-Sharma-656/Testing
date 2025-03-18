@@ -33,13 +33,14 @@ jobs:
       - name: Run Build Test
         run: |
           echo "Building project..."
+          sleep 60
           # Add your build commands here
           echo "Build complete"
 
   # Optional: Add a second job to test concurrent builds
   second-job:
     needs: test-runner
-    runs-on: codebuild-PROJECT_NAME-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-GithubOrg-${{ github.run_id }}-${{ github.run_attempt }}
     
     steps:
       - name: Test Second Job
