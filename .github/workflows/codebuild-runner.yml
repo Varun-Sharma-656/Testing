@@ -6,7 +6,9 @@ on: [push]
 jobs:
   test-runner:
     # Replace PROJECT_NAME with your CodeBuild project name
-    runs-on: codebuild-GithubOrg-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: 
+      - codebuild-GithubOrg-${{ github.run_id }}-${{ github.run_attempt }}
+      - buildspec-override:true
     timeout-minutes: 30  # Add timeout to prevent hanging
 
     steps:
