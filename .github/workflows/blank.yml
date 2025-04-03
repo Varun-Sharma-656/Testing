@@ -1,0 +1,16 @@
+name: Hello World
+on: [push]
+jobs:
+  Hello-World-Job:
+    runs-on:
+      - codebuild-CBEnterSingle-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - run: echo "Hello World!"
+      - run: sleep 45
+  Hello-New-Job:
+    runs-on:
+      - codebuild-CBEnterSingle-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - run: echo "Hello New World 2!"
+      - run: "ls -ltr"
+      - run: sleep 45
