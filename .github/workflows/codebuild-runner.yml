@@ -21,7 +21,7 @@ jobs:
           echo "Runner Group: $RUNNER_GROUP"
           echo "Runner OS: $RUNNER_OS"
           echo "GitHub Workspace: $GITHUB_WORKSPACE"
-          ehoc ""
+      
 
       # Test runner group assignment
       - name: Check Runner Group
